@@ -37,7 +37,7 @@ int InfoMP3(TrackInfo *track) {
 	FILE *fp;
 	fp = fopen(track->way, "rb");
 	if (fp == NULL)
-		return 0;
+		return CAN_NOT_OPEN_FILE;
 	fseek(fp, -128, SEEK_END);
 	for (i = 0; i <= 2; i++)
 		strt[i] = getc(fp);
@@ -61,7 +61,7 @@ int InfoMP3(TrackInfo *track) {
 		strcpy(track->fullname, track->artist);
 		strcat(track->fullname, track->name);
 		fclose(fp);
-		return 1;
+		return SUCCESS;
 	}
 	else {
 		fclose(fp);
