@@ -42,7 +42,7 @@ int InfoMP3(TrackInfo *track) {
 	for (i = 0; i <= 2; i++)
 		strt[i] = getc(fp);
 	strt[3] = '\0';
-	if (!strcmp(strt, "TAG") || !strcmp(strt,"kkk")) {
+	if (!strcmp(strt, "TAG")) {
 		for (i = 0; i < 30; i++)
 			track->name[i] = getc(fp);
 		for (i = 0; i < 30; i++)
