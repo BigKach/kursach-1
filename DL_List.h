@@ -30,7 +30,7 @@ typedef struct DL_LIST{
 	size_t DL_size;
 };
 
-//Ñ÷èòûâàíèå èíôîðìàöèè èç ôàéëà
+//считывание информации о треке
 int InfoMP3(TrackInfo *track) {
 	int i;
 	char  strt[4];
@@ -65,7 +65,7 @@ int InfoMP3(TrackInfo *track) {
 	}
 	else {
 		fclose(fp);
-		return 0;
+		return NO_MP3;
 	}
 }
 //ñîçäàíèå 1-îãî ýëåìåíòà ñïèñêà
