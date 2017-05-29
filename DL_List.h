@@ -25,7 +25,49 @@ typedef struct DL_LIST{
 	size_t DL_size;
 } DL_LIST;
 
+<<<<<<< HEAD:DL_List.h
 //создание 1-ого элемента списка
+=======
+//СЃС‡РёС‚С‹РІР°РЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё Рѕ С‚СЂРµРєРµ
+int InfoMP3(TrackInfo *track) {
+	int i;
+	char  strt[4];
+	FILE *fp;
+	fp = fopen(track->way, "rb");
+	if (fp == NULL)
+		return CAN_NOT_OPEN_FILE;
+	fseek(fp, -128, SEEK_END);
+	for (i = 0; i <= 2; i++)
+		strt[i] = getc(fp);
+	strt[3] = '\0';
+	if (!strcmp(strt, "TAG")) {
+		for (i = 0; i < 30; i++)
+			track->name[i] = getc(fp);
+		for (i = 0; i < 30; i++)
+			track->artist[i] = getc(fp);
+		for (i = 0; i < 30; i++)
+			track->album[i] = getc(fp);
+		for (i = 0; i < 4; i++)
+			track->year[i] = getc(fp);
+		for (i = 0; i < 30; i++)
+			track->comment[i] = getc(fp);
+		track->name[30] = '\0';
+		track->artist[30] = '\0';
+		track->album[30] = '\0';
+		track->year[4] = '\0';
+		track->comment[30] = '\0';
+		strcpy(track->fullname, track->artist);
+		strcat(track->fullname, track->name);
+		fclose(fp);
+		return SUCCESS;
+	}
+	else {
+		fclose(fp);
+		return NO_MP3;
+	}
+}
+//Г±Г®Г§Г¤Г Г­ГЁГҐ 1-Г®ГЈГ® ГЅГ«ГҐГ¬ГҐГ­ГІГ  Г±ГЇГЁГ±ГЄГ 
+>>>>>>> 67a4c5fd69cf333a79c32774991877727d475d6b:DL_List.h
 DL_ITEM* DL_create(TrackInfo NewElem){
 	DL_ITEM *NewItem;
 	NewItem = (DL_ITEM*)malloc(sizeof(DL_ITEM));
@@ -36,7 +78,7 @@ DL_ITEM* DL_create(TrackInfo NewElem){
 	NewItem->TI = NewElem;
 	return NewItem;
 }
-//добавление элемента после
+//Г¤Г®ГЎГ ГўГ«ГҐГ­ГЁГҐ ГЅГ«ГҐГ¬ГҐГ­ГІГ  ГЇГ®Г±Г«ГҐ
 int DL_add_after(DL_LIST *list,TrackInfo NewElem) {
 	DL_ITEM *NewItem;
 	
@@ -63,7 +105,7 @@ int DL_add_after(DL_LIST *list,TrackInfo NewElem) {
 	
 	return SUCCESS;
 }
-//добавление элемента до
+//Г¤Г®ГЎГ ГўГ«ГҐГ­ГЁГҐ ГЅГ«ГҐГ¬ГҐГ­ГІГ  Г¤Г®
 int DL_add_before(DL_LIST *list, TrackInfo NewElem){
 	DL_ITEM *NewItem;
 	NewItem = DL_create(NewElem);
@@ -91,7 +133,7 @@ int DL_add_before(DL_LIST *list, TrackInfo NewElem){
 
 	return SUCCESS;
 }
-//вствавка  в нужное место
+//ГўГ±ГІГўГ ГўГЄГ   Гў Г­ГіГ¦Г­Г®ГҐ Г¬ГҐГ±ГІГ®
 int insert(DL_LIST *list, TrackInfo *NewData) {
 	list->current = list->head;
 	if (list == NULL)
@@ -110,6 +152,7 @@ int insert(DL_LIST *list, TrackInfo *NewData) {
 		DL_add_after(list, *NewData); 
 	return SUCCESS;
 }
+<<<<<<< HEAD:DL_List.h
 //получение имени
 int get_info(TrackInfo *TI) {
 	FILE *fp;
@@ -136,6 +179,9 @@ int get_info(TrackInfo *TI) {
 
 }
 //вставка трека и заполнение информации
+=======
+//ГўГ±ГІГ ГўГЄГ  ГІГ°ГҐГЄГ  ГЁ Г§Г ГЇГ®Г«Г­ГҐГ­ГЁГҐ ГЁГ­ГґГ®Г°Г¬Г Г¶ГЁГЁ
+>>>>>>> 67a4c5fd69cf333a79c32774991877727d475d6b:DL_List.h
 int insert_track(DL_LIST *list,char *way) {
 	TrackInfo NewData;
 	strcpy(NewData.way, way);
@@ -146,7 +192,7 @@ int insert_track(DL_LIST *list,char *way) {
 	else
 		return NO_MP3;
 }
-//движение на 1 позицию вправо
+//Г¤ГўГЁГ¦ГҐГ­ГЁГҐ Г­Г  1 ГЇГ®Г§ГЁГ¶ГЁГѕ ГўГЇГ°Г ГўГ®
 void DL_movR(DL_LIST *list) {
 	if (list == NULL)
 		return;
@@ -162,7 +208,7 @@ void DL_movR(DL_LIST *list) {
 	list->current = list->current->next;
 
 }
-//движение на 1 позицию влево
+//Г¤ГўГЁГ¦ГҐГ­ГЁГҐ Г­Г  1 ГЇГ®Г§ГЁГ¶ГЁГѕ ГўГ«ГҐГўГ®
 void DL_movL(DL_LIST *list) {
 	if (list == NULL)
 		return;
@@ -177,7 +223,7 @@ void DL_movL(DL_LIST *list) {
 
 	list->current = list->current->prev;
 }
-//удаление элемента
+//ГіГ¤Г Г«ГҐГ­ГЁГҐ ГЅГ«ГҐГ¬ГҐГ­ГІГ 
 void DL_delete(DL_LIST *list) {
 	DL_ITEM *tmp;
 	if (list->current == NULL)
@@ -212,7 +258,7 @@ void DL_delete(DL_LIST *list) {
 	
 	return;
 }
-//уничтожение списка
+//ГіГ­ГЁГ·ГІГ®Г¦ГҐГ­ГЁГҐ Г±ГЇГЁГ±ГЄГ 
 void DL_Destroy(DL_LIST *list) {
 	DL_ITEM *tmp;
 	list->current = list->head;
@@ -227,7 +273,7 @@ void DL_Destroy(DL_LIST *list) {
 	list->tail = NULL;
 	list->DL_size = 0;
 }
-//вывод списка на экран(для тестов возможно использоваться не будет)
+//ГўГ»ГўГ®Г¤ Г±ГЇГЁГ±ГЄГ  Г­Г  ГЅГЄГ°Г Г­(Г¤Г«Гї ГІГҐГ±ГІГ®Гў ГўГ®Г§Г¬Г®Г¦Г­Г® ГЁГ±ГЇГ®Г«ГјГ§Г®ГўГ ГІГјГ±Гї Г­ГҐ ГЎГіГ¤ГҐГІ)
 void DL_show(DL_LIST *list) {
 	if (list == NULL)
 		return;
@@ -241,7 +287,7 @@ void DL_show(DL_LIST *list) {
 	printf("%s\n", list->current->TI.fullname);
 	
 }
-//поиск по списку
+//ГЇГ®ГЁГ±ГЄ ГЇГ® Г±ГЇГЁГ±ГЄГі
 DL_ITEM* DL_search(DL_LIST *list, char *key) {
 	list->current = list->head;
 	while (list->current->next != NULL) {
@@ -254,7 +300,7 @@ DL_ITEM* DL_search(DL_LIST *list, char *key) {
 	else
 		return NULL;
 }
-//сохранить треклист
+//Г±Г®ГµГ°Г Г­ГЁГІГј ГІГ°ГҐГЄГ«ГЁГ±ГІ
 void save(DL_LIST *list) {
 	FILE *fp;
 	fp = fopen("SPP_TL.txt", "w");
@@ -270,14 +316,14 @@ void save(DL_LIST *list) {
 	fprintf(fp, "%s\n", list->current->TI.way);
 	fclose(fp);
 }
-//удаление '/n'
+//ГіГ¤Г Г«ГҐГ­ГЁГҐ '/n'
 void delete_n(char *name) {
 	int i = 0;
 	while (name[i] != '\n'&& i<size)
 		i++;
 	name[i] = '\0';
 }
-//загрузка
+//Г§Г ГЈГ°ГіГ§ГЄГ 
 void load(DL_LIST *list) {
 	FILE *fp;
 	char way[size];
@@ -288,6 +334,7 @@ void load(DL_LIST *list) {
 	}
 	fclose(fp);
 }
+<<<<<<< HEAD:DL_List.h
 
 int show_text(DL_LIST *list) {
 	FILE *fp;
@@ -312,3 +359,5 @@ int show_text(DL_LIST *list) {
 	}
 	return SUCCESS;
 }
+=======
+>>>>>>> 67a4c5fd69cf333a79c32774991877727d475d6b:DL_List.h
